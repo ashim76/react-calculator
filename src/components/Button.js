@@ -1,8 +1,10 @@
-import React from 'react'
+import React from "react";
 
-export const Button = ({item}) => {
-    
-    return (
+export const Button = ({ item, handleOnClick }) => {
 
-    <button class={item.cls}>{item.label}</button>  )
+  return (
+    <button className={item.cls} onClick={() => handleOnClick(item.label)}>
+      {item.label}
+    </button>
+  );
 };
