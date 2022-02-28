@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Display } from "./Display";
 import { Button } from "./Button";
 
@@ -24,19 +24,24 @@ const buttons = [
 ];
 
 export const CalculatorFrame = () => {
+  const [textToDisplay, setTextToDisplay] = useState("");
 
-    const [textToDisplay, setTextToDisplay] = useState("");
+  const handleOnClick = value => {
+    let str = textToDisplay + value;
+    if (value === "=") {
+      str = eval(textToDisplay);
 
-    const handleOnClick = value => {
-        setTextToDisplay(textToDisplay + value);
-      };
+    }
+    setTextToDisplay(textToDisplay + value);
+    setTextToDisplay(str);
+  };
 
-      console.log(textToDisplay);
+//   console.log(textToDisplay);
 
   return (
     <div className="mainParent">
       {/*<!-- display area -->*/}
-      <Display />
+      <Display textToDisplay={textToDisplay} />
 
       {/*<!-- buttons -->*/}
       <div className="items">

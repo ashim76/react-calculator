@@ -1,9 +1,10 @@
 import React from "react";
 
-export const Display = () => {
+export const Display = ({ textToDisplay }) => {
   return (
     <div id="result" className="result">
-      0.00
+      {" "}
+      {textToDisplay || "0.00"}{" "}
     </div>
   );
 };
