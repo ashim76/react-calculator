@@ -23,20 +23,66 @@ const buttons = [
   { cls: "ans", label: "=" },
 ];
 
+const symbols = ["+", "-", "*", "/"];
+
 export const CalculatorFrame = () => {
   const [textToDisplay, setTextToDisplay] = useState("");
+  const [isAnswered, setIsAnswered] = useState(false);
+
+  
 
   const handleOnClick = value => {
+      if (isAnswered && value !== "=" ){
+          setTextToDisplay(value);
+          setIsAnswered(false);
+          return;
+      }
     let str = textToDisplay + value;
-    if (value === "=") {
-      str = eval(textToDisplay);
 
+    if (textToDisplay.length < 1 && ["*", "/"].includes(value)) {
+      return;
     }
-    setTextToDisplay(textToDisplay + value);
+
+    
+    if (value === "." && textToDisplay.includes(".")) {
+      return;
+    }
+
+    if (value === "=") {
+        return onTotal();
+      }
+
+    if (value === "AC") {
+      return setTextToDisplay("");
+    }
+
+    if (value === "C") {
+      const str = textToDisplay.slice(0, -1);
+      return setTextToDisplay(str);
+    }
+
+    if (symbols.includes(value)) {
+      const lastChar = textToDisplay.slice(-1);
+      if (symbols.includes(lastChar)) {
+        str = textToDisplay.slice(0, -1) + value;
+        // setTextToDisplay(str);
+      }
+    }
+
     setTextToDisplay(str);
   };
 
-//   console.log(textToDisplay);
+  const onTotal = () => {
+    let str = textToDisplay;
+    const lastChar = textToDisplay.slice(-1);
+    if (symbols.includes(lastChar)) {
+      str = textToDisplay.slice(0, -1);
+    }
+    const ttl = eval(textToDisplay);
+    setTextToDisplay(ttl.toString());
+    setIsAnswered(true);
+  };
+  //   console.log(textToDisplay);
 
   return (
     <div className="mainParent">
